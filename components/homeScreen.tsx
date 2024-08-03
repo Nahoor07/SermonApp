@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Cover from "../assets/images/cover.jpg";
-import { useNavigation } from "@react-navigation/native";
 import { HomeScreenNavigationProp } from "../navigation/types";
+
 interface Props {
   navigation: HomeScreenNavigationProp;
 }
@@ -22,11 +15,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     { id: "3", title: "Item 3" },
   ];
 
+  const handleAddPress = () => {
+    // Handle the add action, e.g., navigate to another screen or open a modal
+    navigation.navigate("NewSermon");
+  };
+
   return (
     <View style={styles.container}>
       <Image source={Cover} style={styles.image} />
       <Text style={styles.title}>List of Sermon is Below:</Text>
-      <View style={styles.container}>
+      <View style={styles.listContainer}>
         {items.map((item) => (
           <TouchableOpacity
             key={item.id}
@@ -38,6 +36,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </View>
+      <TouchableOpacity style={styles.addButton} onPress={handleAddPress}>
+        <Ionicons name="add" size={40} color="white" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -59,6 +60,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
+  listContainer: {
+    flex: 1,
+    width: "100%",
+  },
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -72,6 +77,21 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
+  },
+  addButton: {
+    position: "absolute",
+    bottom: 50,
+    right: 16,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 
